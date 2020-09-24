@@ -4,8 +4,9 @@ import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import Button from '../../UI/Button/Button';
 
 class OrderSummary extends Component {
-  componentDidUpdate() {
-    console.log('[OrderSummary] DidUpdate');
+  // This could be a functional component, doesn't have to be a class
+  componentWillUpdate() {
+    console.log('[OrderSummary] WillUpdate');
   }
 
   render() {
@@ -28,7 +29,7 @@ class OrderSummary extends Component {
         <p>
           <strong>Total Price: {this.props.price.toFixed(2)}</strong>
         </p>
-        <p>Continue to checkout?</p>
+        <p>Continue to Checkout?</p>
         <Button btnType="Danger" clicked={this.props.purchaseCancelled}>
           CANCEL
         </Button>

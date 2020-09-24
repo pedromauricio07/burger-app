@@ -5,52 +5,27 @@ import Aux from '../Auxiliary/Auxiliary';
 
 const withErrorHandler = (WrappedComponent, axios) => {
   return class extends Component {
-    constructor(props) {
-      super(props);
+    state = {
+      error: null,
+    };
+
+    componentWillMount() {
       this.reqInterceptor = axios.interceptors.request.use((req) => {
         this.setState({ error: null });
         return req;
       });
       this.resInterceptor = axios.interceptors.response.use(
-        (res) => {
-          return res;
-        },
+        (res) => res,
         (error) => {
           this.setState({ error: error });
-          return;
         },
       );
     }
 
-    state = {
-      error: null,
-    };
-
-    /* componentWillMount() {
-      axios.interceptors.request.use((req) => {
-        this.setState({ error: null });
-        return req;
-      });
-      axios.interceptors.response.use(
-        (res) => {
-          return res;
-        },
-        (error) => {
-          this.setState({ error: error });
-          return;
-        },
-      );
-    } */
-
-    componentWillUnmount = () => {
-      /*       console.log(
-        '[withErrorHandler] will unmount',
-        this.reqInterceptor,
-        this.resInterceptor,
-      ); */
+    componentWillUnmount() {
       axios.interceptors.request.eject(this.reqInterceptor);
       axios.interceptors.response.eject(this.resInterceptor);
-    };
+    }
 
     errorConfirmedHandler = () => {
       this.setState({ error: null });
